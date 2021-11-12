@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_zoo.view.*
 import reson.cathayholdings.MainApplication
 import reson.cathayholdings.R
@@ -29,8 +30,9 @@ class ZooRecyclerAdapter(val dataList: List<ZooSubResult>, val activity: Activit
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, pos: Int) {
         if (holder is ZooItemViewHolder){
             val zooSubResult = dataList[pos]
-//            MainApplication.imageLoader.displayImage(zooSubResult.E_Pic_URL, holder.imgIV)
-            holder.imgIV.load(zooSubResult.E_Pic_URL)
+            MainApplication.imageLoader.displayImage(zooSubResult.E_Pic_URL, holder.imgIV)
+//            holder.imgIV.load(zooSubResult.E_Pic_URL)
+//            Glide.with(activity).load(zooSubResult.E_Pic_URL).into(holder.imgIV)
             holder.nameTV.text = zooSubResult.E_Name
             holder.infoTV.text = zooSubResult.E_Info
             holder.memoTV.text = zooSubResult.E_Memo

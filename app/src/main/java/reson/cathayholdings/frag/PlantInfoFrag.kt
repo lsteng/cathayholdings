@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import coil.load
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.frag_plant_info.view.*
 import kotlinx.android.synthetic.main.item_sub_info.view.*
 import reson.cathayholdings.MainApplication
@@ -49,8 +50,9 @@ class PlantInfoFrag: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_plant_info, container, false)
         (activity as AppCompatActivity).supportActionBar?.title = plantInfo.F_Name_Ch
-//        MainApplication.imageLoader.displayImage(plantInfo.F_Pic01_URL, view.imgIV)
-        view.imgIV.load(plantInfo.F_Pic01_URL)
+        MainApplication.imageLoader.displayImage(plantInfo.F_Pic01_URL, view.imgIV)
+//        view.imgIV.load(plantInfo.F_Pic01_URL)
+//        Glide.with(this).load(plantInfo.F_Pic01_URL).into(view.imgIV)
         view.nameLayout.titleTV.text = plantInfo.F_Name_Ch
         view.nameLayout.describeTV.text = plantInfo.F_Name_En
         view.aliasLayout.titleTV.text = "別名"

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_plant.view.*
 import reson.cathayholdings.MainApplication
 import reson.cathayholdings.R
@@ -14,7 +15,7 @@ import reson.cathayholdings.data.PlantSubResult
 import reson.cathayholdings.frag.PlantInfoFrag
 import reson.chocomedia.util.FragTransUtil
 
-class PlantRecyclerAdapter(val dataList: List<PlantSubResult>, val fragmentManager: FragmentManager): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PlantRecyclerAdapter(val dataList: List<PlantSubResult>, val activity: Activity, val fragmentManager: FragmentManager): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return PlantItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_plant, parent, false))
     }
@@ -26,8 +27,9 @@ class PlantRecyclerAdapter(val dataList: List<PlantSubResult>, val fragmentManag
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, pos: Int) {
         if (holder is PlantItemViewHolder){
             val plantSubResult = dataList[pos]
-//            MainApplication.imageLoader.displayImage(plantSubResult.F_Pic01_URL, holder.imgIV)
-            holder.imgIV.load(plantSubResult.F_Pic01_URL)
+            MainApplication.imageLoader.displayImage(plantSubResult.F_Pic01_URL, holder.imgIV)
+//            holder.imgIV.load(plantSubResult.F_Pic01_URL)
+//            Glide.with(activity).load(plantSubResult.F_Pic01_URL).into(holder.imgIV)
             holder.nameTV.text = plantSubResult.F_Name_Ch
             holder.aliasTV.text = plantSubResult.F_AlsoKnown
 

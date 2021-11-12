@@ -22,6 +22,7 @@ class FragViewModel(application: Application): AndroidViewModel(application) {
     val context = getApplication<Application>().applicationContext
     val isShowProgress = MutableLiveData<Boolean>()
     val plantResultList = MutableLiveData<List<PlantSubResult>>()
+    var keyword = ""
 
     //此errorHandler用來接 CoroutineScope 沒有被 try-catch 包起來的 exceptions
     val errorHandler = CoroutineExceptionHandler { _, error ->
@@ -32,13 +33,17 @@ class FragViewModel(application: Application): AndroidViewModel(application) {
 
     init {
         isShowProgress.value = true
+    }
+
+    fun setQueryKey(key: String){
+        keyword = "&q=$key"
         getPlantData()
     }
 
     fun getPlantData(){
         isShowProgress.value = true
         viewModelScope.launch(coroutineContext) {
-            val response = HttpUtil.getDataSting(Constant.PlantApi)
+            val response = HttpUtil.getDataSting(Constant.PlantApi + keyword)
             val plantResult = Gson().fromJson(response, PlantModel::class.java)
             plantResultList.postValue(plantResult.result.results)
         }

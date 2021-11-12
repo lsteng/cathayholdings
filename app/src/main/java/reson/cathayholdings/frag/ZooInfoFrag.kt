@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.frag_zoo_info.*
 import kotlinx.android.synthetic.main.frag_zoo_info.view.*
 import reson.cathayholdings.MainApplication
@@ -58,13 +59,15 @@ class ZooInfoFrag: Fragment() {
             zooInfo = it.getParcelable<ZooSubResult>(ARG_zooInfo)!!
         }
         viewModel = ViewModelProvider(this).get(FragViewModel::class.java)
+        viewModel.setQueryKey(zooInfo.E_Name)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_zoo_info, container, false)
         (activity as AppCompatActivity).supportActionBar?.title = zooInfo.E_Name
-//        MainApplication.imageLoader.displayImage(zooInfo.E_Pic_URL, view.imgIV)
-        view.imgIV.load(zooInfo.E_Pic_URL)
+        MainApplication.imageLoader.displayImage(zooInfo.E_Pic_URL, view.imgIV)
+//        view.imgIV.load(zooInfo.E_Pic_URL)
+//        Glide.with(this).load(zooInfo.E_Pic_URL).into(view.imgIV)
         view.infoTV.text = zooInfo.E_Info
         view.memoTV.text = zooInfo.E_Memo
         view.categoryTV.text = zooInfo.E_Category
@@ -91,7 +94,7 @@ class ZooInfoFrag: Fragment() {
         mActivity.runOnUiThread{
             plantSubResultList.let {
                 if (!it.isNullOrEmpty()) {
-                    plantRecyclerAdapter = PlantRecyclerAdapter(it, parentFragmentManager)
+                    plantRecyclerAdapter = PlantRecyclerAdapter(it, mActivity, parentFragmentManager)
                     recycler.adapter = plantRecyclerAdapter
                 }
                 showProgress(false)

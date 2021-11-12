@@ -2,6 +2,7 @@ package reson.cathayholdings
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -45,7 +46,6 @@ class MainActivity : AppCompatActivity() {
             showProgress(it)
         })
         viewModel.alertMessage.observe(this, Observer {
-            showProgress(false)
             if(!it.isNullOrEmpty()){
                 if (zooRecyclerAdapter != null){
                     Snackbar.make(mainRL, it, Snackbar.LENGTH_SHORT).show()
@@ -92,12 +92,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showProgress(isShow: Boolean){
-        if (isShow){
-            progressBar.visibility = View.VISIBLE
-            swipeRefreshLayout.isRefreshing = true
-        } else{
-            progressBar.visibility = View.GONE
-            swipeRefreshLayout.isRefreshing = false
-        }
+        swipeRefreshLayout.isRefreshing = isShow
     }
 }
